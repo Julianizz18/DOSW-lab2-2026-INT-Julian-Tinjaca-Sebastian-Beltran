@@ -76,3 +76,29 @@ public class Invoice {
     }
 }
 ```
+### 06. ¿Qué es y para qué usamos el pom.xml?
+El pom.xml es el archivo de configuración central que utiliza Maven para gestionar un proyecto. Lo usamos principalmente para:
+* **Manejar las dependencias:** En lugar de descargar los archivos .jar manualmente de internet, los escribimos en este archivo y Maven los descarga e incluye automáticamente.
+* **Información del proyecto:** Guarda los datos básicos del proyecto como el nombre, el grupo (groupId), el ID del artefactoy la versión que estamos desarrollando.
+* **Configurar la versión de Java:** Nos permite definir con qué versión de Java se debe compilar el código para que no haya errores de compatibilidad.
+
+---
+
+### 07. ¿Qué diferencia hay entre mvn compile, mvn package y mvn install?
+
+La diferencia principal es que Maven funciona por etapas consecutivas, lo que significa que cada comando hace lo suyo y también ejecuta todo lo de los comandos anteriores:
+
+* **mvn compile:** Es el paso más básico. Solo toma los archivos de código fuente y los compila para convertirlos en binarios. No corre pruebas ni genera ningún archivo final.
+* **mvn package:** Este comando va un paso más allá. Primero compila el código, luego ejecuta todas las pruebas unitarias para revisar que nada esté roto, y si todo sale bien, guarda el proyecto en un archivo comprimido ejecutable dentro de la carpeta target.
+* **mvn install:** Hace todo lo anterior y además toma ese archivo .jar resultante y lo copia en la carpeta de Maven de nuestra computadora. Esto sirve por si tenemos otros proyectos en la misma máquina que necesiten usar este código como una librería.
+
+---
+
+### 08. ¿Qué diferencia existe entre una interfaz y una clase abstracta?
+
+Aunque ambas sirven para definir contratos en el código, se diferencian en lo siguiente:
+
+* **Herencia:** Una clase en Java solo puede heredar de una sola clase abstracta pero esa misma clase puede implementar todas las interfaces que necesite.
+* **Atributos y estado:** En una interfaz no se pueden tener variables comunes, solo constantes. En cambio, una clase abstracta puede tener cualquier tipo de variable para guardar el estado del objeto.
+* **Métodos con lógica:** La clase abstracta está pensada para tener una mezcla de métodos vacíos y métodos ya programados con lógica que las hijas van a heredar. La interfaz, por el contrario, está diseñada principalmente para definir solo los nombres de los métodos que las otras clases están obligadas a programar.
+* **Enfoque:** Usamos una clase abstracta cuando los objetos son de la misma familia. Usamos una interfaz para dar una capacidad a clases que no tienen nada que ver entre sí.
