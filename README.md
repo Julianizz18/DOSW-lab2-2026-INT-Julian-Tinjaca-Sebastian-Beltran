@@ -79,7 +79,7 @@ public class Invoice {
 ### 06. ¿Qué es y para qué usamos el pom.xml?
 El pom.xml es el archivo de configuración central que utiliza Maven para gestionar un proyecto. Lo usamos principalmente para:
 * **Manejar las dependencias:** En lugar de descargar los archivos .jar manualmente de internet, los escribimos en este archivo y Maven los descarga e incluye automáticamente.
-* **Información del proyecto:** Guarda los datos básicos del proyecto como el nombre, el grupo (groupId), el ID del artefactoy la versión que estamos desarrollando.
+* **Información del proyecto:** Guarda los datos básicos del proyecto como el nombre, el grupo, el ID del artefactoy la versión que estamos desarrollando.
 * **Configurar la versión de Java:** Nos permite definir con qué versión de Java se debe compilar el código para que no haya errores de compatibilidad.
 
 ---
