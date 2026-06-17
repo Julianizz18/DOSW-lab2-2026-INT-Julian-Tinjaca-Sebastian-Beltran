@@ -1,4 +1,4 @@
-package edu.dosw.bootcamp.lab.solid.reto2;
+package edu.dosw.bootcamp.lab.creacionales.reto2;
 
 import java.util.List;
 
