@@ -1,104 +1,250 @@
-# Laboratorio 2 — SOLID · Patrones de Diseño · UML · POO Avanzada
-### Escuela Colombiana de Ingeniería Julio Garavito
-**Compañía:** DOSW COMPANY
+# Laboratorio 2 — Hackathon Express
+## SOLID · Patrones de Diseño · UML
+
+**Integrantes:** Sebastián Beltrán · Julián Tinjacá  
+**Asignatura:** Desarrollo Orientado a Software  
+**Rama:** feature/BeltranSebastian_TinjacaJulian_2026-INT
 
 ---
 
-## Integrantes del Grupo
-* **Integrante :** Julian Camilo Tinjaca Corredor
-* **Integrante :** Johan Sebasgei Beltran Gutierrez
+## Estructura del proyecto
 
----
-
-## Desarrollo del Cuestionario
-
-### 01. ¿Qué ventaja ofrece el polimorfismo en el diseño de clases frente al uso de múltiples condicionales para determinar el comportamiento de un objeto?
-
-
-Evita el acoplamiento rígido y la necesidad de modificar el código existente cada vez que se añade un nuevo comportamiento.
-
-Al usar condicionales, el sistema se vuelve difícil de mantener y propenso a errores, ya que cualquier cambio exige buscar y modificar cada estructura condicional en el proyecto. Con el polimorfismo, el comportamiento se delega a las subclases o implementaciones; si se requiere un nuevo comportamiento, simplemente se crea una nueva clase sin tocar el código que la consume.
-
----
-
-### 02. ¿Por qué una clase inmutable puede mejorar la seguridad en un sistema?
-
-Una clase inmutable garantiza que el estado de un objeto no pueda ser modificado una vez creado. Esto mejora la seguridad en varios aspectos:
-* **Hilos seguros:** En entornos concurrentes/multihilo, varios hilos pueden compartir el objeto sin riesgo de corrupción de datos o condiciones de carrera, eliminando la necesidad de sincronización compleja.
-* **Integridad de datos:** Evita efectos secundarios no deseados causados por referencias compartidas .
-* **Consistencia:** Los objetos inmutables son ideales como claves en mapas  o elementos en conjuntos , asegurando que su hashCode nunca cambie.
-
----
-
-### 03. ¿Qué problema podría aparecer en un sistema si los atributos de las clases se mantienen públicos en lugar de privados con getters y setters controlados?
-
-Rompe por completo el principio de **encapsulamiento**. Los principales problemas que genera son:
-* **Pérdida de control y validación:** Cualquier clase externa puede asignar valores inválidos o incoherentes a los atributos.
-* **Alto acoplamiento:** Si el nombre o el tipo de dato de un atributo cambia, todas las clases externas que accedían directamente a él se romperán, obligando a refactorizar gran parte del sistema.
-* **Falta de flexibilidad:** No se pueden crear atributos de "solo lectura" o realizar operaciones lógicas ocultas  al momento de modificar un valor.
-
----
-
-### 04. Según el principio Abierto/Cerrado, ¿cómo deberíamos modificar el sistema si queremos añadir una nueva funcionalidad sin alterar el código existente?
-
-El sistema debe modificarse mediante extensión, no mediante alteración directa del código fuente.
-
-Para lograrlo, el diseño original debe depender de abstracciones. Cuando se requiere una nueva funcionalidad, se crea una nueva clase que implemente la interfaz o herede de la clase abstracta correspondiente. De este modo, el comportamiento del sistema se extiende agregando código nuevo, mientras que las clases preexistentes permanecen intactas, reduciendo drásticamente el riesgo de introducir regresiones.
-
----
-
-### 05. ¿Por qué es importante que una clase cumpla con el Principio de Única Responsabilidad? Da un ejemplo donde se vulnere.
-
-#### Explicación:
-Es fundamental porque asegura que una clase tenga una única razón para cambiar. Esto incrementa la cohesión del código, facilita la lectura, simplifica las pruebas unitarias y reduce el impacto de los cambios, ya que las modificaciones en un requerimiento específico solo afectarán a la clase encargada de esa tarea.
-
-#### Ejemplo de Vulneración:
-A continuación se presenta una clase Invoice que vulnera el principio, ya que se encarga de gestionar los datos de la factura, calcular los impuestos, guardarlos en la base de datos y enviar un correo electrónico.
-
-```java
-public class Invoice {
-    private double amount;
-
-    public Invoice(double amount) {
-        this.amount = amount;
-    }
-
-    public double calculateTotalWithTax() {
-        return this.amount * 1.19;
-    }
-
-    public void saveToDatabase() {
-        System.out.println("Guardando la factura en la base de datos...");
-    }
-    
-    public void sendEmailNotification() {
-        System.out.println("Enviando la factura por correo electrónico...");
-    }
-}
 ```
-### 06. ¿Qué es y para qué usamos el pom.xml?
-El pom.xml es el archivo de configuración central que utiliza Maven para gestionar un proyecto. Lo usamos principalmente para:
-* **Manejar las dependencias:** En lugar de descargar los archivos .jar manualmente de internet, los escribimos en este archivo y Maven los descarga e incluye automáticamente.
-* **Información del proyecto:** Guarda los datos básicos del proyecto como el nombre, el grupo, el ID del artefactoy la versión que estamos desarrollando.
-* **Configurar la versión de Java:** Nos permite definir con qué versión de Java se debe compilar el código para que no haya errores de compatibilidad.
+src/main/java/edu/dosw/bootcamp/lab/
+├── solid/
+│   └── reto1TiendaDonPepe/
+├── creacionales/
+│   ├── reto2ChefEstrellas/
+│   └── reto3ReinoVehiculos/
+├── comportamiento/
+│   ├── reto4CasaDeCambio/
+│   ├── reto6SoporteTecnico/
+│   └── reto7ControlRemoto/
+└── estructurales/
+    ├── reto5CafePersonalizado/
+    └── reto8Zoologico/
+```
 
 ---
 
-### 07. ¿Qué diferencia hay entre mvn compile, mvn package y mvn install?
+# Reto 1 — La Tienda de Don Pepe
 
-La diferencia principal es que Maven funciona por etapas consecutivas, lo que significa que cada comando hace lo suyo y también ejecuta todo lo de los comandos anteriores:
+## Descripción
 
-* **mvn compile:** Es el paso más básico. Solo toma los archivos de código fuente y los compila para convertirlos en binarios. No corre pruebas ni genera ningún archivo final.
-* **mvn package:** Este comando va un paso más allá. Primero compila el código, luego ejecuta todas las pruebas unitarias para revisar que nada esté roto, y si todo sale bien, guarda el proyecto en un archivo comprimido ejecutable dentro de la carpeta target.
-* **mvn install:** Hace todo lo anterior y además toma ese archivo .jar resultante y lo copia en la carpeta de Maven de nuestra computadora. Esto sirve por si tenemos otros proyectos en la misma máquina que necesiten usar este código como una librería.
+
+
+## Principios SOLID aplicados
+
+
+
+## Polimorfismo
+
+
+
+## Inmutabilidad
+
+
+
+## Streams usados
+
+
+
+## Evidencia de ejecución
+
+
 
 ---
 
-### 08. ¿Qué diferencia existe entre una interfaz y una clase abstracta?
+# Reto 2 — El Chef de 5 Estrellas
 
-Aunque ambas sirven para definir contratos en el código, se diferencian en lo siguiente:
+## Descripción
 
-* **Herencia:** Una clase en Java solo puede heredar de una sola clase abstracta pero esa misma clase puede implementar todas las interfaces que necesite.
-* **Atributos y estado:** En una interfaz no se pueden tener variables comunes, solo constantes. En cambio, una clase abstracta puede tener cualquier tipo de variable para guardar el estado del objeto.
-* **Métodos con lógica:** La clase abstracta está pensada para tener una mezcla de métodos vacíos y métodos ya programados con lógica que las hijas van a heredar. La interfaz, por el contrario, está diseñada principalmente para definir solo los nombres de los métodos que las otras clases están obligadas a programar.
-* **Enfoque:** Usamos una clase abstracta cuando los objetos son de la misma familia. Usamos una interfaz para dar una capacidad a clases que no tienen nada que ver entre sí.
+
+
+## Patrón de Diseño
+
+**Categoría:**  
+**Patrón utilizado:**
+
+**Justificación:**
+
+**Cómo lo apliqué:**
+
+| Clase | Rol |
+|-------|-----|
+|  |  |
+
+## Evidencia de ejecución
+
+
+
+---
+
+# Reto 3 — El Reino de los Vehículos
+
+## Descripción
+Concesionaria que vende vehículos de tierra, acuáticos y aéreos en tres categorías: Económico, Lujo y Usado. El usuario elige cuántos vehículos comprar, su tipo, modelo y categoría. Al final se muestra el resumen con el total calculado con Streams.
+
+## Patrón de Diseño
+
+**Categoría:** Creacional  
+**Patrón utilizado:** Abstract Factory
+
+**Justificación:** El problema tiene dos dimensiones de variación: el tipo de medio (tierra, acuático, aéreo) y la categoría (económico, lujo, usado). Abstract Factory permite crear familias de vehículos sin que el código cliente conozca las clases concretas. Agregar un nuevo tipo de medio solo requiere crear una nueva fábrica sin modificar nada existente, cumpliendo el principio Abierto/Cerrado.
+
+**Cómo lo apliqué:**
+
+| Clase | Rol |
+|-------|-----|
+| `FabricaVehiculos` | Interfaz Abstract Factory — define `crearVehiculo(modelo, categoria)` |
+| `FabricaTierra` | Fábrica concreta — crea Auto, Bicicleta, Moto |
+| `FabricaAcuatica` | Fábrica concreta — crea Lancha, Velero, Jet Ski |
+| `FabricaAerea` | Fábrica concreta — crea Avion, Avioneta, Helicoptero |
+| `Vehiculo` | Producto abstracto — atributos comunes y getters |
+| `Auto`, `Moto`, `Lancha`, etc. | Productos concretos — velocidad y precio según categoría |
+| `Reto3ReinoVehiculos` | Cliente — selecciona la fábrica y llama `crearVehiculo()` |
+
+## Streams usados
+- `compra.stream().mapToDouble(Vehiculo::getPrecio).sum()` para calcular el total de la compra.
+
+## Evidencia de ejecución
+
+
+
+---
+
+# Reto 4 — La Estafa de la Casa de Cambio
+
+## Descripción
+
+
+
+## Patrón de Diseño
+
+**Categoría:**  
+**Patrón utilizado:**
+
+**Justificación:**
+
+**Cómo lo apliqué:**
+
+| Clase | Rol |
+|-------|-----|
+|  |  |
+
+## Streams usados
+
+
+
+## Evidencia de ejecución
+
+
+
+---
+
+# Reto 5 — El Café Personalizado
+
+## Descripción
+
+
+
+## Patrón de Diseño
+
+**Categoría:**  
+**Patrón utilizado:**
+
+**Justificación:**
+
+**Cómo lo apliqué:**
+
+| Clase | Rol |
+|-------|-----|
+|  |  |
+
+## Evidencia de ejecución
+
+
+
+---
+
+# Reto 6 — Soporte Técnico
+
+## Descripción
+Sistema de soporte que recibe tickets con distintos niveles de complejidad (básico, intermedio, avanzado, crítico). Cada técnico intenta resolver el ticket y si no puede, lo pasa al siguiente en la cadena. Al final se muestran estadísticas generadas con Streams.
+
+## Patrón de Diseño
+
+**Categoría:** Comportamiento  
+**Patrón utilizado:** Chain of Responsibility
+
+**Justificación:** El sistema no sabe de antemano qué técnico resolverá cada ticket. La cadena permite que cada técnico intente resolverlo y, si no puede, lo pase al siguiente sin que el cliente lo sepa. Agregar un nuevo nivel de soporte solo requiere crear un nuevo `Tecnico` e insertarlo en la cadena, sin tocar el código existente.
+
+**Cómo lo apliqué:**
+
+| Clase | Rol |
+|-------|-----|
+| `Tecnico` | Handler abstracto — define `manejar()` y `setSiguiente()` |
+| `TecnicoBasico` | Handler concreto — resuelve nivel básico, pasa el resto |
+| `TecnicoIntermedio` | Handler concreto — resuelve nivel intermedio, pasa el resto |
+| `TecnicoAvanzado` | Handler concreto — resuelve nivel avanzado, marca pendiente si es crítico |
+| `Ticket` | Contiene descripción, nivel, prioridad y estado de resolución |
+| `Reto6SoporteTecnico` | Cliente — construye la cadena y envía los tickets |
+
+## Streams usados
+- Conteo por técnico: `tickets.stream().filter(t -> t.isResuelto() && t.getResolvedBy().equals(...)).count()`
+- Pendientes: `tickets.stream().filter(t -> !t.isResuelto()).count()`
+- Promedio de prioridad: `tickets.stream().filter(Ticket::isResuelto).mapToInt(Ticket::getPrioridadValor).average()`
+
+## Evidencia de ejecución
+
+
+
+---
+
+# Reto 7 — El Control Remoto Mágico
+
+## Descripción
+Control remoto que permite a múltiples usuarios ejecutar acciones sobre dispositivos del hogar (luces, puertas, música, persianas). Registra qué usuario realizó cada acción, mantiene un historial completo y permite deshacer acciones individuales.
+
+## Patrón de Diseño
+
+**Categoría:** Comportamiento  
+**Patrón utilizado:** Command
+
+**Justificación:** El patrón Command encapsula cada acción como un objeto independiente, lo que permite guardarlas en un historial y deshacerlas sin que el control remoto conozca los detalles internos de cada dispositivo. Cada comando sabe cómo ejecutarse y cómo revertirse, lo que hace que el undo sea limpio y extensible.
+
+**Cómo lo apliqué:**
+
+| Clase | Rol |
+|-------|-----|
+| `Comando` | Interfaz — define `ejecutar()`, `deshacer()`, `getDescripcion()` |
+| `ComandoLuces` | Comando concreto — encender/apagar con intensidad |
+| `ComandoPuertas` | Comando concreto — abrir/cerrar puerta |
+| `ComandoMusica` | Comando concreto — reproducir/parar con volumen |
+| `ComandoPersianas` | Comando concreto — subir/bajar con porcentaje |
+| `RegistroAccion` | Almacena el comando, el usuario y si fue deshecho |
+| `ControlRemoto` | Invocador — ejecuta comandos y mantiene el historial |
+| `Reto7ControlRemoto` | Cliente — crea los comandos según el input del usuario |
+
+## Evidencia de ejecución
+
+
+
+---
+
+# Reto 8 — El Zoológico de los UML
+
+## Descripción
+Sistema de gestión del zoológico ECI Zoo con animales de tres especies (mamíferos, reptiles y aves), cuidadores que los atienden y visitantes que interactúan con ellos. Diseñado con principios SOLID y el patrón Decorator para atributos dinámicos.
+
+## Diagrama UML de Clases
+
+![Reto 8.png](src/main/java/edu/dosw/bootcamp/lab/estructurales/reto8/Reto%208.png)
+
+## Patrón de Diseño
+
+**Categoría:** Estructural  
+**Patrón utilizado:** Decorator
+
+**Justificación:** Los animales pueden tener atributos dinámicos adicionales (color de pelaje, origen, rareza, historial médico) que no todos comparten y que pueden combinarse entre sí. El patrón Decorator permite agregar estos atributos envolviendo el animal en capas sin modificar las clases base ni crear una explosión de subclases para cada combinación posible.
+
