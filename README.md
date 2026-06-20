@@ -31,27 +31,33 @@ src/main/java/edu/dosw/bootcamp/lab/
 
 ## Descripción
 
-
+Sistema de ventas que permite a un cliente 
+agregar productos a un carrito, recibir un descuento según su tipo
+y obtener un recibo al finalizar la compra
 
 ## Principios SOLID aplicados
-
+S Producto representa un producto, Cliente maneja el descuento y Carrito gestiona la compra
+O Se pueden agregar nuevos tipos de cliente sin modificar Carrito
+D Carrito depende de las abstracciones Producto y Cliente no de implementaciones
 
 
 ## Polimorfismo
 
-
+El método aplicarDescuento() en Cliente aplica el descuento correcto 
+según el tipo de cliente sin que Carrito necesite saber cuál es
 
 ## Inmutabilidad
 
-
+Producto es una clase final con atributos final
+garantizando que el precio unitario
 
 ## Streams usados
 
-
+productos.stream() con iteración para calcular el subtotal de cada producto.
 
 ## Evidencia de ejecución
 
-
+![img.png](imagenes/pepe.png)
 
 ---
 
@@ -59,24 +65,32 @@ src/main/java/edu/dosw/bootcamp/lab/
 
 ## Descripción
 
-
+Sistema que permite construir una hamburguesa personalizada 
+paso a paso eligiendo pan, carne, queso, vegetales y salsa.
 
 ## Patrón de Diseño
 
 **Categoría:**  
+Creacional
 **Patrón utilizado:**
+Builder
 
 **Justificación:**
-
+La hamburguesa tiene múltiples ingredientes que son opcionales y que se configuran 
+paso a paso Builder evita tener un constructor con muchos parámetros
 **Cómo lo apliqué:**
 
 | Clase | Rol |
 |-------|-----|
-|  |  |
+|HamburguesaBuilder | Builder — define los pasos de construcción con métodos encadenados |
+|Hamburguesa | Producto — objeto final construido con todos los ingredientes |
+|Chef | Director — usa el builder para preparar la hamburguesa |
+|Ingrediente | Representa cada ingrediente con nombre y precio |
+|Reto2ChefEstrellas | Cliente — llama al builder con los ingredientes elegidos |
 
 ## Evidencia de ejecución
 
-
+![img_3.png](imagenes/chef.png)
 
 ---
 
@@ -117,28 +131,40 @@ Concesionaria que vende vehículos de tierra, acuáticos y aéreos en tres categ
 
 ## Descripción
 
-
+Sistema de conversión de monedas que permite al 
+realizar múltiples transacciones convirtiendo entre COP, EUR, USD y JPY
 
 ## Patrón de Diseño
 
 **Categoría:**  
+Comportamiento
 **Patrón utilizado:**
+Strategy
 
 **Justificación:**
-
+tiene un algoritmo de conversión distinto cada moneda 
+Strategy encapsula cada algoritmo en su propia clase, 
+permitiendo intercambiarlos sin modificar toda la casa de cambio
 **Cómo lo apliqué:**
 
 | Clase | Rol |
 |-------|-----|
-|  |  |
+| ConversionStrategy | Interfaz Strategy — define convertir(monto)|
+| CopToUsdStrategy |Estrategia concreta — convierte COP a USD|
+| EurToCopStrategy | Estrategia concreta — convierte EUR a COP |
+| UsdToJpyStrategy | Estrategia concreta — convierte USD a JPY |
+| CasaDeCambio | Contexto — usa la estrategia seleccionada |
+| Reto4CasaDeCambio | Cliente — selecciona la estrategia según el par elegido |
+
+
 
 ## Streams usados
 
-
+Cálculo del total USD equivalente acumulado por transacción
 
 ## Evidencia de ejecución
 
-
+![img_2.png](imagenes/cambio.png)
 
 ---
 
@@ -146,24 +172,35 @@ Concesionaria que vende vehículos de tierra, acuáticos y aéreos en tres categ
 
 ## Descripción
 
-
+Cafetería que permite al cliente personalizar
+su café agregando toppings uno por uno Cada topping suma un precio adicional
+Se pueden agregar nuevos toppings sin modificar la clase base del café
 
 ## Patrón de Diseño
 
 **Categoría:**  
+Estructural
 **Patrón utilizado:**
-
+Decorator
 **Justificación:**
-
+Los toppings se pueden combinar en cualquier
+orden y cantidad sin crear subclases para cada combinación
 **Cómo lo apliqué:**
+
 
 | Clase | Rol |
 |-------|-----|
-|  |  |
+| Cafe | Interfaz — define getDescripcion() y getPrecio() |
+| CafeBase | Componente base — Espresso |
+| CafeDecorator | Decorator abstracto — envuelve un Cafe |
+| LecheAvenaDecorator | Decorator concreto — agrega leche de avena |
+| CarameloDecorator | Decorator concreto — agrega caramelo |
+| ChantillyDecorator | Decorator concreto — agrega chantilly  |
+| Reto5CafePersonalizado | Cliente — construye el café con los toppings elegidos |
 
 ## Evidencia de ejecución
 
-
+![img_1.png](imagenes/cafe.png)
 
 ---
 
