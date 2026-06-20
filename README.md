@@ -78,6 +78,7 @@ Builder
 **Justificación:**
 La hamburguesa tiene múltiples ingredientes que son opcionales y que se configuran 
 paso a paso Builder evita tener un constructor con muchos parámetros
+
 **Cómo lo apliqué:**
 
 | Clase | Rol |
@@ -145,6 +146,7 @@ Strategy
 tiene un algoritmo de conversión distinto cada moneda 
 Strategy encapsula cada algoritmo en su propia clase, 
 permitiendo intercambiarlos sin modificar toda la casa de cambio
+
 **Cómo lo apliqué:**
 
 | Clase | Rol |
@@ -185,6 +187,7 @@ Decorator
 **Justificación:**
 Los toppings se pueden combinar en cualquier
 orden y cantidad sin crear subclases para cada combinación
+
 **Cómo lo apliqué:**
 
 
