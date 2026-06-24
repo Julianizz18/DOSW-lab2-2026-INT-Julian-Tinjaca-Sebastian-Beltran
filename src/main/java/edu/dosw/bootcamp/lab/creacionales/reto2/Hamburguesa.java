@@ -20,12 +20,12 @@ public class Hamburguesa {
     }
     public void mostrar() {
         System.out.println("Tu Hamburguesa");
-        System.out.println("Pan:      " + pan);
-        System.out.println("Carne:    " + carne);
-        System.out.println("Queso:    " + queso);
+        System.out.println("Pan: " + pan);
+        System.out.println("Carne: " + carne);
+        System.out.println("Queso: " + queso);
         System.out.println("Vegetales: " + String.join(", ", vegetales));
-        System.out.println("Salsa:    " + salsa);
-        System.out.println("Total:    $" + (int)total);
+        System.out.println("Salsa: " + salsa);
+        System.out.println("Total: $" + (int)total);
         System.out.println("¡Buen provecho!");
     }
 }
